@@ -147,7 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <app-location route="{{_sectionRoute}}"></app-location>
-    <app-route route="{{_sectionRoute}}" pattern="/1.0/:section" data="{{_sectionData}}" tail="{{_subsectionRoute}}"></app-route>
+    <app-route route="{{_sectionRoute}}" pattern="/:version/:section" data="{{_sectionData}}" tail="{{_subsectionRoute}}"></app-route>
     <app-route route="{{_sectionRoute}}" pattern="/search/" query-params="{{_searchParams}}"></app-route>
 
     <iron-ajax url="[[_sectionRoute.path]]" handle-as="document" on-response="_handleResponse" auto></iron-ajax>
@@ -157,7 +157,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="header-toolbar layout horizontal center">
         <paper-icon-button class="drawer-toggle" icon="pw-icons:menu" on-click="_toggleDrawer"></paper-icon-button>
 
-        <a href="/1.0/" class="logo-link">
+        <a href$="[[_getHref(_sectionData.version, '')]]" class="logo-link">
           <img src="../images/logos/p-logo.png" alt="Polymer Logo">
           <span>Polymer Project</span>
         </a>
@@ -166,10 +166,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <nav>
           <iron-selector class="sections-tabs" attr-for-selected="name" activate-event="" selected="[[_sectionData.section]]">
-            <a href="/1.0/start/" name="start">Start</a>
-            <a href="/1.0/docs/devguide/feature-overview" name="docs">Polymer</a>
-            <a href="/1.0/toolbox/" name="toolbox">App Toolbox</a>
-            <a href="/1.0/blog/" name="blog">News</a>
+            <a href$="[[_getHref(_sectionData.version, 'start/')]]" name="start">Start</a>
+            <a href$="[[_getHref(_sectionData.version, 'docs/devguide/feature-overview')]]" name="docs">Polymer</a>
+            <a href$="[[_getHref(_sectionData.version, 'toolbox/')]]" name="toolbox">App Toolbox</a>
+            <a href$="[[_getHref(_sectionData.version, 'blog/')]]" name="blog">News</a>
             <a href="https://elements.polymer-project.org/" target="_blank" name="catalog">Element Catalog</a>
           </iron-selector>
         </nav>
@@ -585,6 +585,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       wrapper.style.display = '';
       wrapper.style.maxHeight = '';
       wrapper.style.top = '0px';
+    },
+
+    _getHref: function(version, path) {
+      return '/' + version + '/' + path;
     }
   });
   </script>
